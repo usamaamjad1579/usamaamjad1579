@@ -1,9 +1,14 @@
 <h1 align="center">Hi, I'm Muhammad Usama Amjad 👋</h1>
 <h3 align="center">AI/ML Engineer in training · RAG · AI Agents · Deep Learning</h3>
 
+<p align="center">
+  <a href="https://www.linkedin.com/in/muhammad-usama-amjad-409b39363/"><img src="https://img.shields.io/badge/LinkedIn-Muhammad%20Usama%20Amjad-0A66C2?logo=linkedin&logoColor=white" alt="LinkedIn"></a>
+</p>
+
 I build practical AI applications with Python: **retrieval-augmented generation (RAG)** systems that answer from your own documents, **LLM agents** that plan and use tools, and **deep learning** models compared honestly against simple baselines.
 
-- 🎓 Currently in an AI/ML training program, focused on LLM applications and deep learning
+- 🎓 BS Artificial Intelligence student at the University of Management and Technology (UMT), Lahore (2023–2027)
+- 🛠️ Hands-on AI/ML training alongside my degree, focused on LLM applications and deep learning
 - 🧪 I test what I build: each AI project below has an offline test suite that runs in GitHub Actions
 - 📏 I measure before I choose: in my LSTM projects, simple baselines beat the neural network 2 out of 3 times, and the README explains when that changes
 - 🤝 Open to AI/ML internships and junior roles
