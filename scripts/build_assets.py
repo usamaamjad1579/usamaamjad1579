@@ -309,9 +309,9 @@ def project_card(project: dict) -> str:
     return svg(W, H, f"{project['title']}: {project['description']}", body)
 
 
-# ---------------------------------------------------------------- trophies
+# ---------------------------------------------------------------- live data
 
-TROPHY_QUERY = """query($login: String!) {
+PROFILE_QUERY = """query($login: String!) {
   user(login: $login) {
     createdAt
     followers { totalCount }
@@ -321,9 +321,16 @@ TROPHY_QUERY = """query($login: String!) {
       totalCount
       nodes { stargazerCount languages(first: 20) { nodes { name } } }
     }
-    contributionsCollection { totalCommitContributions restrictedContributionsCount }
+    contributionsCollection {
+      totalCommitContributions
+      restrictedContributionsCount
+      contributionCalendar { weeks { contributionDays { date contributionCount } } }
+    }
   }
 }"""
+
+
+# ---------------------------------------------------------------- trophies
 
 # Points needed for each rank, lowest first: C, B, A, AA, AAA, S, SS, SSS.
 RANKS = ["C", "B", "A", "AA", "AAA", "S", "SS", "SSS"]
@@ -340,10 +347,11 @@ THRESHOLDS = {
 RANK_COLOURS = {"S": ("#ffe680", "#f0b400"), "A": ("#c7d2fe", "#7c8cf8"), "B": ("#f5c48a", "#c77d2e"), "C": ("#cbd5e1", "#7d8aa3")}
 
 
-def fetch_trophy_data(login: str, token: str) -> dict:
+def fetch_profile_data(login: str, token: str) -> tuple[dict, list[tuple[str, int]]]:
+    """Return the trophy counts and the daily contributions for the past year."""
     request = urllib.request.Request(
         "https://api.github.com/graphql",
-        data=json.dumps({"query": TROPHY_QUERY, "variables": {"login": login}}).encode(),
+        data=json.dumps({"query": PROFILE_QUERY, "variables": {"login": login}}).encode(),
         headers={"Authorization": f"bearer {token}", "Content-Type": "application/json"},
     )
     with urllib.request.urlopen(request, timeout=30) as response:
@@ -354,7 +362,7 @@ def fetch_trophy_data(login: str, token: str) -> dict:
     repos = user["repositories"]["nodes"]
     created = datetime.fromisoformat(user["createdAt"].replace("Z", "+00:00"))
     contributions = user["contributionsCollection"]
-    return {
+    counts = {
         "Commits": contributions["totalCommitContributions"] + contributions["restrictedContributionsCount"],
         "Repositories": user["repositories"]["totalCount"],
         "Languages": len({lang["name"] for repo in repos for lang in repo["languages"]["nodes"]}),
@@ -364,6 +372,12 @@ def fetch_trophy_data(login: str, token: str) -> dict:
         "Pull Requests": user["pullRequests"]["totalCount"],
         "Issues": user["issues"]["totalCount"],
     }
+    days = [
+        (day["date"], day["contributionCount"])
+        for week in contributions["contributionCalendar"]["weeks"]
+        for day in week["contributionDays"]
+    ]
+    return counts, days
 
 
 def rank_for(category: str, value: float) -> str | None:
@@ -411,6 +425,105 @@ def trophies(data: dict) -> str:
     return svg(W, H, "GitHub trophies earned from public activity", "".join(cups), defs="".join(gradients))
 
 
+# ---------------------------------------------------------------- activity graph
+
+GREEN = "#39d353"
+GREEN_DEEP = "#26a641"
+
+
+def streaks(days: list[tuple[str, int]]) -> tuple[int, int]:
+    """Current and longest run of days with at least one contribution."""
+    longest = run = 0
+    for _, count in days:
+        run = run + 1 if count else 0
+        longest = max(longest, run)
+    current = 0
+    for i, (_, count) in enumerate(reversed(days)):
+        if count:
+            current += 1
+        elif i > 0:  # today can still be empty without breaking the streak
+            break
+    return current, longest
+
+
+def nice_max(value: int) -> int:
+    for step in (4, 8, 12, 20, 40, 60, 100, 200, 400, 1000):
+        if value <= step:
+            return step
+    return value
+
+
+def activity(days: list[tuple[str, int]], window: int = 31) -> str:
+    recent = days[-window:]
+    current, longest = streaks(days)
+    total = sum(count for _, count in recent)
+    active = sum(1 for _, count in recent if count)
+
+    W, H = 1280, 420
+    left, right, top, bottom = 70, 40, 140, 62
+    chart_w, chart_h = W - left - right, H - top - bottom
+    peak = nice_max(max(count for _, count in recent))
+    step = chart_w / (len(recent) - 1)
+    points = [(left + i * step, top + chart_h * (1 - count / peak)) for i, (_, count) in enumerate(recent)]
+    line = "M" + " L".join(f"{x:.1f} {y:.1f}" for x, y in points)
+    area = f"{line} L{points[-1][0]:.1f} {top + chart_h} L{points[0][0]:.1f} {top + chart_h} Z"
+
+    grid = []
+    for k in range(5):
+        y = top + chart_h * (1 - k / 4)
+        grid.append(
+            f'<line x1="{left}" y1="{y:.1f}" x2="{W - right}" y2="{y:.1f}" stroke="{BORDER}" stroke-dasharray="{"none" if k == 0 else "4 6"}"/>'
+            f'<text x="{left - 14}" y="{y + 4:.1f}" text-anchor="end" font-size="12" fill="{MUTED}">{peak * k // 4}</text>'
+        )
+    labels, previous_month = [], None
+    for (date, _), (x, _) in zip(recent, points):
+        day = datetime.fromisoformat(date)
+        labels.append(f'<text x="{x:.1f}" y="{top + chart_h + 22}" text-anchor="middle" font-size="12" fill="{MUTED}">{day.day}</text>')
+        if day.month != previous_month:
+            labels.append(f'<text x="{x:.1f}" y="{top + chart_h + 44}" text-anchor="middle" font-size="12" font-weight="700" fill="{TEXT}">{day:%b}</text>')
+            previous_month = day.month
+    dots = "".join(
+        f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{4.5 if count else 3}" fill="{GREEN if count else BORDER}" stroke="{BG}" stroke-width="2"/>'
+        for (_, count), (x, y) in zip(recent, points)
+    )
+
+    def plural(n: int, word: str) -> str:
+        return f"{n} {word}{'' if n == 1 else 's'}"
+
+    stats = [
+        (str(total), f"contributions, last {window} days"),
+        (f"{active}/{window}", "active days"),
+        (plural(current, "day"), "current streak"),
+        (plural(longest, "day"), "longest streak, past year"),
+    ]
+    stat_w = 210
+    stat_markup = "".join(
+        f'<text x="{W - right - (len(stats) - 1 - i) * stat_w}" y="58" text-anchor="end" font-size="26" font-weight="800" fill="{GREEN}">{esc(value)}</text>'
+        f'<text x="{W - right - (len(stats) - 1 - i) * stat_w}" y="82" text-anchor="end" font-size="13" fill="{MUTED}">{esc(label)}</text>'
+        for i, (value, label) in enumerate(stats)
+    )
+
+    defs = f"""
+  <linearGradient id="fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{GREEN}" stop-opacity="0.45"/><stop offset="1" stop-color="{GREEN_DEEP}" stop-opacity="0"/></linearGradient>"""
+    style = """
+  .trend { stroke-dasharray: 1; animation: draw 2.2s ease-out both; }
+  .area, .dots { animation: fade 1s ease-out 1.2s both; }
+  @keyframes draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }"""
+    body = f"""
+<rect x="0.5" y="0.5" width="{W - 1}" height="{H - 1}" rx="14" fill="{BG}" stroke="{BORDER}"/>
+<text x="{left - 30}" y="56" font-size="24" font-weight="700" fill="{TEXT}">Contribution activity</text>
+<text x="{left - 30}" y="82" font-size="14" fill="{MUTED}">Daily GitHub contributions, updated every day</text>
+{stat_markup}
+{''.join(grid)}
+<path class="area" d="{area}" fill="url(#fill)"/>
+<path class="trend" d="{line}" pathLength="1" fill="none" stroke="{GREEN}" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<g class="dots">{dots}</g>
+{''.join(labels)}"""
+    title = f"Contribution activity: {total} contributions in the last {window} days, current streak {plural(current, 'day')}"
+    return svg(W, H, title, body, style, defs)
+
+
 # ---------------------------------------------------------------- main
 
 
@@ -431,11 +544,12 @@ def main() -> None:
 
     token = os.getenv("GITHUB_TOKEN")
     if not token:
-        print("GITHUB_TOKEN not set: skipped trophies")
+        print("GITHUB_TOKEN not set: skipped trophies and activity graph")
         return
-    data = fetch_trophy_data(PROFILE["login"], token)
-    print("trophy data:", data)
-    write("trophies.svg", trophies(data))
+    counts, days = fetch_profile_data(PROFILE["login"], token)
+    print("trophy data:", counts)
+    write("trophies.svg", trophies(counts))
+    write("activity.svg", activity(days))
 
 
 if __name__ == "__main__":

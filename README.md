@@ -102,10 +102,16 @@ usama = {
   <img src="profile-summary-card-output/tokyonight/2-most-commit-language.svg" alt="Top languages by commit" width="49%">
 </p>
 
+## 📈 Contribution Activity
+
+<p align="center">
+  <img src="assets/activity.svg" alt="Green line graph of daily GitHub contributions over the last 31 days, with current and longest streak" width="100%">
+</p>
+
 ## 🏆 GitHub Trophies
 
 <p align="center">
   <img src="assets/trophies.svg" alt="GitHub trophies">
 </p>
 
-<sub>The analytics cards and trophies refresh every day with GitHub Actions.</sub>
+<sub>The analytics cards, activity graph and trophies refresh every day with GitHub Actions.</sub>
