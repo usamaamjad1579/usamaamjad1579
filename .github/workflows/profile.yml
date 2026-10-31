@@ -1,0 +1,49 @@
+name: Update profile dashboard
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # every day at 05:00 Pakistan time
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["profile.json", "scripts/**", ".github/workflows/profile.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-dashboard
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate analytics cards
+        uses: vn7n24fzkq/github-profile-summary-cards@release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          USERNAME: ${{ github.repository_owner }}
+          TIME_ZONE: Asia/Karachi
+          AUTO_PUSH: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build artwork and trophies
+        run: python scripts/build_assets.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets profile-summary-card-output
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Update profile dashboard"
+          git push

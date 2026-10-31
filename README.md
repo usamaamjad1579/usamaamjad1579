@@ -1,45 +1,111 @@
-<h1 align="center">Hi, I'm Muhammad Usama Amjad 👋</h1>
-<h3 align="center">AI/ML Engineer in training · RAG · AI Agents · Deep Learning</h3>
-
 <p align="center">
-  <a href="https://www.linkedin.com/in/muhammad-usama-amjad-409b39363/"><img src="https://img.shields.io/badge/LinkedIn-Muhammad%20Usama%20Amjad-0A66C2?logo=linkedin&logoColor=white" alt="LinkedIn"></a>
+  <img src="assets/banner.svg" alt="Muhammad Usama Amjad: AI/ML Engineer, RAG, AI Agents, Deep Learning" width="100%">
 </p>
 
-I build practical AI applications with Python: **retrieval-augmented generation (RAG)** systems that answer from your own documents, **LLM agents** that plan and use tools, and **deep learning** models compared honestly against simple baselines.
+## 🎯 About Me
 
-- 🎓 BS Artificial Intelligence student at the University of Management and Technology (UMT), Lahore (2023–2027)
-- 🛠️ Hands-on AI/ML training alongside my degree, focused on LLM applications and deep learning
-- 🧪 I test what I build: each AI project below has an offline test suite that runs in GitHub Actions
-- 📏 I measure before I choose: in my LSTM projects, simple baselines beat the neural network 2 out of 3 times, and the README explains when that changes
-- 🤝 Open to AI/ML internships and junior roles
+<table>
+<tr>
+<td width="58%" valign="top">
 
-## 🚀 Featured projects
+```python
+usama = {
+    "role": "AI/ML Engineer in training",
+    "study": "BS Artificial Intelligence @ UMT",
+    "years": "2023 - 2027",
+    "location": "Lahore, Pakistan",
 
-| Project | What it does | Built with |
-|---|---|---|
-| 📄 [**RAG Document Chat**](https://github.com/usamaamjad1579/rag-document-chat) | Upload PDFs and ask questions. Answers cite the exact passage and page, and say "not found" instead of guessing. Includes a retrieval evaluation. | ChromaDB · Groq Llama 3.3 · Streamlit |
-| 🔎 [**Agentic Research Assistant**](https://github.com/usamaamjad1579/agentic-research-assistant) | An agent that plans research, searches the web, reads pages and writes a cited report. | LangGraph · tool calling · Groq |
-| ✍️ [**Multi-Agent Content Studio**](https://github.com/usamaamjad1579/multi-agent-content-studio) | Researcher, Writer, Critic and Editor agents that revise a draft until it passes a scoring rubric. | LangGraph · multi-agent · Streamlit |
-| 🧠 [**When does an LSTM win?**](https://github.com/usamaamjad1579/deep-learning-sequence-models) | Sentiment analysis, next-word prediction and CO₂ forecasting, each with an LSTM vs a baseline and a written decision. | TensorFlow/Keras · scikit-learn |
+    "building": [
+        "RAG systems with cited answers",
+        "Tool-using AI agents",
+        "Multi-agent workflows",
+    ],
 
-## 🛠️ Tech stack
+    "learning": [
+        "LLM evaluation",
+        "Deploying AI apps",
+        "MLOps",
+    ],
 
-**Generative AI:** RAG, LLM agents, tool calling, prompt engineering, LangGraph, LangChain, ChromaDB, Groq API
+    "tech": {
+        "ai": ["LangGraph", "ChromaDB",
+               "TensorFlow", "scikit-learn"],
+        "llm": ["Groq", "Llama 3.3"],
+        "web": ["HTML", "CSS", "JS", "React"],
+        "tools": ["Git", "pytest", "Streamlit"],
+    },
+}
+```
 
-**Machine learning and deep learning:** TensorFlow/Keras (LSTM, RNN, CNN), scikit-learn, NumPy, pandas, statsmodels, Matplotlib
+<img src="assets/quote.svg" alt="AI is the new electricity. (Andrew Ng)" width="100%">
 
-**Engineering:** Python, pytest, Git, GitHub Actions, Streamlit, Jupyter, Google Colab
+</td>
+<td width="42%" valign="top">
+  <img src="assets/terminal.svg" alt="Python session using rag-document-chat to retrieve passages and answer with a citation" width="100%">
+  <img src="assets/pipeline.svg" alt="RAG pipeline: upload, chunk, embed, search, filter, generate, answer with citations" width="100%">
+</td>
+</tr>
+</table>
 
-**Also:** HTML, CSS, JavaScript
+## 📫 Connect With Me
 
-## 📚 Foundations
+<p align="center">
+  <a href="https://www.linkedin.com/in/muhammad-usama-amjad-409b39363/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>
+  <a href="https://github.com/usamaamjad1579?tab=repositories"><img src="https://img.shields.io/badge/All_Projects-181717?style=for-the-badge&logo=github&logoColor=white" alt="All projects on GitHub"></a>
+  <img src="https://img.shields.io/badge/Open_to-AI%2FML_Internships-7C3AED?style=for-the-badge" alt="Open to AI/ML internships">
+</p>
 
-- [python-ml-foundations](https://github.com/usamaamjad1579/python-ml-foundations): 52 tasks covering Python, statistics, NumPy, pandas, and linear and logistic regression
-- [pakify-music-player](https://github.com/usamaamjad1579/pakify-music-player): a responsive music streaming UI in plain JavaScript
-- [expense-tracker-cli](https://github.com/usamaamjad1579/expense-tracker-cli) and [ATM-System](https://github.com/usamaamjad1579/ATM-System): early Python projects with file storage and object-oriented design
+## 🛠️ Tech Stack
 
-## 🌱 What I'm working on next
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=py,tensorflow,sklearn,cpp,html,css,js,react,bootstrap,wordpress,git,github,githubactions,ps&perline=7" alt="Python, TensorFlow, scikit-learn, C++, HTML, CSS, JavaScript, React, Bootstrap, WordPress, Git, GitHub, GitHub Actions, Photoshop">
+</p>
 
-- Evaluating RAG answers for faithfulness, not just retrieval
-- Adding memory and human approval steps to agents
-- Deploying my AI apps so anyone can try them in the browser
+<p align="center">
+  <img src="https://img.shields.io/badge/LangGraph-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white" alt="LangGraph">
+  <img src="https://img.shields.io/badge/LangChain-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white" alt="LangChain">
+  <img src="https://img.shields.io/badge/ChromaDB-FF6446?style=for-the-badge" alt="ChromaDB">
+  <img src="https://img.shields.io/badge/Groq-F55036?style=for-the-badge" alt="Groq">
+  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit">
+  <img src="https://img.shields.io/badge/Keras-D00000?style=for-the-badge&logo=keras&logoColor=white" alt="Keras">
+  <img src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white" alt="NumPy">
+  <img src="https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="pandas">
+  <img src="https://img.shields.io/badge/Matplotlib-11557C?style=for-the-badge" alt="Matplotlib">
+  <img src="https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white" alt="Jupyter">
+  <img src="https://img.shields.io/badge/Google_Colab-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white" alt="Google Colab">
+  <img src="https://img.shields.io/badge/pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white" alt="pytest">
+  <img src="https://img.shields.io/badge/Shopify-7AB55C?style=for-the-badge&logo=shopify&logoColor=white" alt="Shopify">
+</p>
+
+## 🚀 Featured Projects
+
+<p align="center">
+  <a href="https://github.com/usamaamjad1579/rag-document-chat"><img src="assets/projects/rag-document-chat.svg" alt="RAG Document Chat" width="49%"></a>
+  <a href="https://github.com/usamaamjad1579/agentic-research-assistant"><img src="assets/projects/agentic-research-assistant.svg" alt="Agentic Research Assistant" width="49%"></a>
+</p>
+<p align="center">
+  <a href="https://github.com/usamaamjad1579/multi-agent-content-studio"><img src="assets/projects/multi-agent-content-studio.svg" alt="Multi-Agent Content Studio" width="49%"></a>
+  <a href="https://github.com/usamaamjad1579/deep-learning-sequence-models"><img src="assets/projects/deep-learning-sequence-models.svg" alt="When Does an LSTM Win?" width="49%"></a>
+</p>
+
+## 📊 GitHub Analytics
+
+<p align="center">
+  <img src="profile-summary-card-output/tokyonight/0-profile-details.svg" alt="Profile details and contributions" width="100%">
+</p>
+<p align="center">
+  <img src="profile-summary-card-output/tokyonight/1-repos-per-language.svg" alt="Top languages by repo" width="49%">
+  <img src="profile-summary-card-output/tokyonight/4-productive-time.svg" alt="Commits by time of day" width="49%">
+</p>
+<p align="center">
+  <img src="profile-summary-card-output/tokyonight/3-stats.svg" alt="GitHub stats" width="49%">
+  <img src="profile-summary-card-output/tokyonight/2-most-commit-language.svg" alt="Top languages by commit" width="49%">
+</p>
+
+## 🏆 GitHub Trophies
+
+<p align="center">
+  <img src="assets/trophies.svg" alt="GitHub trophies">
+</p>
+
+<sub>The analytics cards and trophies refresh every day with GitHub Actions.</sub>

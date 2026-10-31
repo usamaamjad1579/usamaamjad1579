@@ -1,0 +1,82 @@
+{
+  "login": "usamaamjad1579",
+  "name": "Muhammad Usama Amjad",
+  "title": "AI/ML Engineer in training",
+  "tags": [
+    "RAG",
+    "AI Agents",
+    "LangGraph",
+    "Deep Learning",
+    "Python"
+  ],
+  "quote": {
+    "text": "AI is the new electricity.",
+    "author": "Andrew Ng"
+  },
+  "projects": [
+    {
+      "repo": "rag-document-chat",
+      "kind": "RAG",
+      "title": "RAG Document Chat",
+      "description": "Ask questions about your PDFs and get answers that cite the exact passage and page, or an honest \"not found\".",
+      "highlights": [
+        "MRR 1.00 on sample set",
+        "16 offline tests",
+        "Page citations"
+      ],
+      "tech": [
+        "ChromaDB",
+        "Groq Llama 3.3",
+        "Streamlit"
+      ]
+    },
+    {
+      "repo": "agentic-research-assistant",
+      "kind": "AI AGENT",
+      "title": "Agentic Research Assistant",
+      "description": "Plans the research, searches the web, reads sources and writes a report with numbered citations.",
+      "highlights": [
+        "4 tools",
+        "Round-capped loop",
+        "16 offline tests"
+      ],
+      "tech": [
+        "LangGraph",
+        "Tool calling",
+        "Groq"
+      ]
+    },
+    {
+      "repo": "multi-agent-content-studio",
+      "kind": "MULTI-AGENT",
+      "title": "Multi-Agent Content Studio",
+      "description": "Researcher, Writer, Critic and Editor agents revise a draft until it passes a scoring rubric.",
+      "highlights": [
+        "4 agent roles",
+        "Critic revision loop",
+        "10 offline tests"
+      ],
+      "tech": [
+        "LangGraph",
+        "Groq",
+        "Streamlit"
+      ]
+    },
+    {
+      "repo": "deep-learning-sequence-models",
+      "kind": "DEEP LEARNING",
+      "title": "When Does an LSTM Win?",
+      "description": "Sentiment analysis, next-word prediction and CO2 forecasting, each LSTM benchmarked against a simple baseline.",
+      "highlights": [
+        "3 real datasets",
+        "Baselines vs LSTM",
+        "Written decisions"
+      ],
+      "tech": [
+        "TensorFlow",
+        "Keras",
+        "scikit-learn"
+      ]
+    }
+  ]
+}
